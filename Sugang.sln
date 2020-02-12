@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sugang", "Sugang\Sugang.csproj", "{104D99AD-5571-4998-9395-675694CFE462}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{104D99AD-5571-4998-9395-675694CFE462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{104D99AD-5571-4998-9395-675694CFE462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{104D99AD-5571-4998-9395-675694CFE462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{104D99AD-5571-4998-9395-675694CFE462}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56874D7A-1FFF-48B5-B390-D5CCDB1B9558}
+	EndGlobalSection
+EndGlobal
