@@ -45,7 +45,6 @@ namespace Sugang
 
             Console.WriteLine("Logined: " + DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"));
 
-            
        RETRY:
             Console.Write("Enter Subscribe Course Number (ex. CHM1021-010): ");
             var hacksu = Console.ReadLine();
