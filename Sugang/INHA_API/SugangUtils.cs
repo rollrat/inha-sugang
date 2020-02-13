@@ -20,11 +20,16 @@ namespace Sugang.INHA_API
     public class Subject
     {
         public string Hacksu;
+        public string Group;
         public string Name;
         public string Score;
+        public string Type;
+        public string Time;
         public string Professor;
         public string Department;
+        public string Estimation;
         public string Remain;
+        public string Bigo;
     }
 
     public static class SugangUtils
@@ -64,6 +69,31 @@ namespace Sugang.INHA_API
 
                 return result;
             }
+        }
+
+        public static List<Subject> LoadCurrentSeasonSubjects()
+        {
+            var url = "https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Search.aspx";
+
+            var wc = new WebClient();
+            var html = wc.DownloadString(url);
+
+            var result = new List<Subject>();
+
+            return result;
+        }
+
+        public static void SubscribeCourseByHacksu(this SugangSession ss, string hacksu)
+        {
+        }
+
+        public static void UnsubscribeCourseByHacksu(this SugangSession ss, string hacksu)
+        {
+        }
+
+        public static List<Subject> GetSubscribedCourses(this SugangSession ss)
+        {
+            return null;
         }
     }
 }
