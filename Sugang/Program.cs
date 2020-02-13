@@ -48,10 +48,13 @@ namespace Sugang
        RETRY:
             Console.Write("Enter Subscribe Course Number (ex. CHM1021-010): ");
             var hacksu = Console.ReadLine();
+            List<Subject> r1 = null;
 
-            var r1 = ss.QureyStatusByHaksu(hacksu);
-
-            if (r1.Count == 0)
+            try
+            {
+                r1 = ss.QureyStatusByHaksu(hacksu);
+            }
+            catch
             {
                 Console.WriteLine("'" + hacksu + "' doesn't seem to be an appropriate course number.");
                 Console.WriteLine("Try again!");
