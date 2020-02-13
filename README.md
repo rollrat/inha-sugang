@@ -1,9 +1,7 @@
-# 수강신청 여석 알림이 v1.0
+# Sugang API
 
-![](res/a.gif)
+Tiny API for `sugang.inha.ac.kr`
 
-컴잘알분들은 알아서 개조해서쓰세요.
-
-## 다운로드
-
-2020-02-12: https://github.com/rollrat/sugang-remain-alarm/releases/download/1.0/SugangAlarm.exe
+The use of this source code to create a course registration macro is prohibited.
+The developer assumes no responsibility for any violations of the university rules and the laws.
+In addition, the developer is not responsible for any problems resulting from the modification and use of this program.
