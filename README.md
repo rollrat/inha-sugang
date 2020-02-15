@@ -8,9 +8,9 @@ In addition, the developer is not responsible for any problems resulting from th
 
 If you want to create a timetable, see https://github.com/rollrat/InhaTT.
 
-## How to use
+## 1. Sugang Methods
 
-### 1. Login
+### 1.1. Login
 
 Login method is very simple.
 Using the DPI bypass program when using this method can cause critical errors.
@@ -23,9 +23,9 @@ if (session == SugangSession.ErrorSession)
   throw new Exception("Fail to login!");
 ```
 
-### 2. Time Table Methods
+### 1.2. Time Table Methods
 
-#### 2.1. Enumeration current season subjects list
+#### 1.2.1. Enumeration current season subjects list
 
 ``` cs
 public class Subject
@@ -47,10 +47,32 @@ public class Subject
 List<Subject> subjects = SugangUtils.LoadCurrentSeasonSubjects();
 ```
 
-#### 2.2. Get subscribed courses - Login required
+#### 1.2.2. Get subscribed courses - Login required
 
 ``` cs
 List<Subject> subjects = session.GetSubscribedCourses();
 ```
 
-### 3. Course Application Method
+### 1.3. Course Application Method
+
+## 2. Mail Method
+
+### 2.1. Query Address by Member Name
+
+``` cs
+public class SearchResult
+{
+    public string Id;
+    public string Name;
+    public string Email;
+    public string Position;
+    public string[] DutyName;
+    public string NodeType;
+    public string[] Departments;
+    public string[] DepartmentsIds;
+}
+
+var session = MailSession.Create("id", "password");
+
+List<SearchResult> results =  session.QueryAddress("rollrat");
+```
