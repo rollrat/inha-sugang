@@ -25,6 +25,12 @@ namespace Sugang.INHA_API
 
         public CookieCollection Cookies { get; private set; }
 
+        /// <summary>
+        /// Login to sugang.inha.ac.kr
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pwd"></param>
+        /// <returns></returns>
         public static SugangSession Create(string id, string pwd)
         {
             //
@@ -96,7 +102,12 @@ namespace Sugang.INHA_API
                     return ErrorSession;
 
                 var ss =  new SugangSession { Cookies = cookies };
-                ss.create_itissugang_session();
+
+                try
+                {
+                    ss.create_itissugang_session();
+                }
+                catch { }
 
                 return ss;
             }

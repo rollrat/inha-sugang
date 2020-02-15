@@ -159,7 +159,42 @@ namespace Sugang.INHA_API
 
         public static List<Subject> GetSubscribedCourses(this SugangSession ss)
         {
-            return null;
+            var url = "https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Table.aspx";
+
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+
+            request.CookieContainer = new CookieContainer();
+            request.CookieContainer.Add(ss.Cookies[0]);
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                var html = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(51949)).ReadToEnd();
+
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                var root_node = document.DocumentNode;
+
+                var table = root_node.SelectSingleNode("//*[@id=\"dgList\"]");
+                var result = new List<Subject>();
+                foreach (var item in table.SelectNodes("./tbody[1]/tr"))
+                {
+                    var subject = new Subject();
+                    subject.Hacksu = item.SelectSingleNode("./td[2]").InnerText.Trim();
+                    subject.Group = item.SelectSingleNode("./td[3]").InnerText.Trim();
+                    subject.Name = item.SelectSingleNode("./td[4]").InnerText.Trim();
+                    subject.Class = item.SelectSingleNode("./td[5]").InnerText.Trim();
+                    subject.Score = item.SelectSingleNode("./td[6]").InnerText.Trim();
+                    subject.Type = item.SelectSingleNode("./td[7]").InnerText.Trim();
+                    subject.Time = item.SelectSingleNode("./td[8]").InnerText.Trim();
+                    subject.Professor = item.SelectSingleNode("./td[9]").InnerText.Trim();
+                    subject.Estimation = item.SelectSingleNode("./td[10]").InnerText.Trim();
+                    subject.Bigo = item.SelectSingleNode("./td[11]").InnerText.Trim();
+                    result.Add(subject);
+                }
+
+                return result;
+            }
         }
     }
 }
