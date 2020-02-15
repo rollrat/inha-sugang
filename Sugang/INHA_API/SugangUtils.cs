@@ -38,14 +38,7 @@ namespace Sugang.INHA_API
     {
         public static List<Subject> QureyStatusByHaksu(this SugangSession ss, string haksu)
         {
-            var url = $"https://sugang.inha.ac.kr/sugang/SU_53001/Remain_Search.aspx?gb=direct&gubun=1&haksu={haksu}&objList=txtHaksu";
-
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-
-            request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(ss.Cookies[0]);
-            request.CookieContainer.Add(ss.Cookies[1]);
+            var request = ss.CreateGetRequest($"https://sugang.inha.ac.kr/sugang/SU_53001/Remain_Search.aspx?gb=direct&gubun=1&haksu={haksu}&objList=txtHaksu");
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {
@@ -159,13 +152,7 @@ namespace Sugang.INHA_API
 
         public static List<Subject> GetSubscribedCourses(this SugangSession ss)
         {
-            var url = "https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Table.aspx";
-
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-
-            request.CookieContainer = new CookieContainer();
-            request.CookieContainer.Add(ss.Cookies[0]);
+            var request = ss.CreateGetRequest("https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Table.aspx");
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {

@@ -25,6 +25,10 @@ namespace Sugang.INHA_API
 
         public CookieCollection Cookies { get; private set; }
 
+        public bool IsValidITISSugangCookie { get; private set; }
+
+        #region Login
+
         /// <summary>
         /// Login to sugang.inha.ac.kr
         /// </summary>
@@ -106,6 +110,7 @@ namespace Sugang.INHA_API
                 try
                 {
                     ss.create_itissugang_session();
+                    ss.IsValidITISSugangCookie = true;
                 }
                 catch { }
 
@@ -162,6 +167,21 @@ namespace Sugang.INHA_API
             }
 
             return string.Join("|", rr);
+        }
+
+        #endregion
+
+        public HttpWebRequest CreateGetRequest(string url)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+
+            request.CookieContainer = new CookieContainer();
+            request.CookieContainer.Add(Cookies[0]);
+            if (IsValidITISSugangCookie)
+                request.CookieContainer.Add(Cookies[1]);
+
+            return request;
         }
     }
 }
