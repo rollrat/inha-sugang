@@ -76,3 +76,14 @@ var session = MailSession.Create("id", "password");
 
 List<SearchResult> results =  session.QueryAddress("rollrat");
 ```
+
+## 3. Everytime Method
+
+You can get time table informations from `everytime.kr`.
+
+``` cs
+var es = EverytimeSession.Create("id", "password");
+var sems = es.ListingSemesters();
+var tables = es.GetTableListFromSemester(sems[3]);
+List<string> hacksu = es.GetHacksuFromTableInfo(tables[0]);
+```
