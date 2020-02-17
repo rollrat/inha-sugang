@@ -59,5 +59,24 @@ namespace Sugang.EVERYTIME_API
                 return ms;
             }
         }
+
+        public HttpWebRequest CreatePostRequest(string url)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+
+            request.Headers.Add("Origin", "https://everytime.kr/");
+            request.Referer = "https://everytime.kr/";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0";
+            request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip, deflate, br");
+            request.Headers.Add(HttpRequestHeader.AcceptLanguage, "ko,en-US;q=0.7,en;q=0.3");
+            request.Host = "everytime.kr";
+            request.CookieContainer = new CookieContainer();
+            request.CookieContainer.Add(Cookies[0]);
+
+            return request;
+        }
     }
 }

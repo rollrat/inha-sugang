@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EVERYTIME_API\EverytimeSession.cs" />
+    <Compile Include="EVERYTIME_API\EverytimeUtils.cs" />
     <Compile Include="INHA_API\Crpyto\Base64.cs" />
     <Compile Include="INHA_API\Crpyto\RSAHelper.cs" />
     <Compile Include="INHA_API\Crpyto\RSAKeyExtensions.cs" />
