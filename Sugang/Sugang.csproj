@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EVERYTIME_API\EverytimeSession.cs" />
     <Compile Include="INHA_API\Crpyto\Base64.cs" />
     <Compile Include="INHA_API\Crpyto\RSAHelper.cs" />
     <Compile Include="INHA_API\Crpyto\RSAKeyExtensions.cs" />
