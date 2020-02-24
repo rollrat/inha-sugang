@@ -15,6 +15,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Sugang.INHA_API
 {
@@ -146,13 +147,65 @@ namespace Sugang.INHA_API
             return result;
         }
 
-        public static void SubscribeCourseByHacksu(this SugangSession ss, string hacksu)
+        public static void SubscribeCourseBySubject(this SugangSession ss, Subject subject)
         {
+            var url = "https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Search.aspx";
+            string html;
+            using (var client = new WebClient())
+                html = client.DownloadString(url);
 
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            var root_node = document.DocumentNode;
+            var form = root_node.SelectSingleNode("//form[@name='form1']");
+
+            var param = new Dictionary<string, string>();
+            foreach (var input in form.SelectNodes(".//input"))
+                if (!param.ContainsKey(input.GetAttributeValue("name", "")) && input.GetAttributeValue("type", "") == "hidden")
+                    param.Add(input.GetAttributeValue("name", ""), input.GetAttributeValue("value", ""));
+
+            param["hhdhaksubunban"] = subject.OpenPop;
+
+            param.Add("ddlDept", "0194002");
+            param.Add("ddlKita", "4");
+            param.Add("ddlTime1", "선택");
+            param.Add("ddlTime2", "선택");
+            param.Add("ddlTime3", "선택");
+
+            param.Add("__LASTFOCUS", "");
+            param.Add("__EVENTTARGET", "ibtnReSave");
+            param.Add("__EVENTARGUMENT", "");
+
+            var reg = new Regex(@"%[a-f0-9]{2}");
+            foreach (var key in param.Keys.ToArray())
+                param[key] = reg.Replace(HttpUtility.UrlEncode(param[key], Encoding.GetEncoding(51949)), m => m.Value.ToUpperInvariant());
+
+            var query = string.Join("&", param.ToList().Select(x => $"{x.Key}={x.Value}"));
+
+            var request = ss.CreateGetRequest("https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Search.aspx");
+            request.Method = "POST";
+            request.Referer = "https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Search.aspx";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0";
+            request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip, deflate, br");
+            request.Headers.Add(HttpRequestHeader.AcceptLanguage, "ko,en-US;q=0.7,en;q=0.3");
+            request.Headers.Add("Upgrade-Insecure-Requests", "1");
+            request.Host = "sugang.inha.ac.kr";
+
+            var request_stream = new StreamWriter(request.GetRequestStream());
+            request_stream.Write(query);
+            request_stream.Close();
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                var res = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            }
         }
 
-        public static void UnsubscribeCourseByHacksu(this SugangSession ss, string hacksu)
+        public static void UnsubscribeCourseBySubject(this SugangSession ss, Subject subject) 
         {
+
         }
 
         public static List<Subject> GetSubscribedCourses(this SugangSession ss)
