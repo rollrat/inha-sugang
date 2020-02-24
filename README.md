@@ -53,6 +53,13 @@ List<Subject> subjects = SugangUtils.LoadCurrentSeasonSubjects();
 List<Subject> subjects = session.GetSubscribedCourses();
 ```
 
+#### 1.2.3. Insert course to basket - Login required
+
+``` cs
+List<Subject> subjects = SugangUtils.LoadCurrentSeasonSubjects();
+session.SubscribeCourseBySubject(subjects.Where(x => x.Name.Contains("컴파일러"))[0]);
+```
+
 ### 1.3. Course Application Method
 
 ## 2. Mail Method
