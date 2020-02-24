@@ -32,6 +32,9 @@ namespace Sugang.INHA_API
         public string Estimation;
         public string Remain;
         public string Bigo;
+
+        // Query Parameters
+        public string OpenPop;
     }
 
     public static class SugangUtils
@@ -66,7 +69,7 @@ namespace Sugang.INHA_API
             }
         }
 
-        public static List<Subject> LoadCurrentSeasonSubjects()
+        public static List<Subject> LoadCurrentSeasonSubjects(this SugangSession ss)
         {
             var url = "https://sugang.inha.ac.kr/sugang/SU_51001/Lec_Time_Search.aspx";
 
@@ -90,7 +93,7 @@ namespace Sugang.INHA_API
 
             Parallel.ForEach(dept, dd =>
             {
-                var request = (HttpWebRequest)WebRequest.Create(url);
+                var request = ss.CreateGetRequest(url);
 
                 request.Method = "POST";
                 request.Referer = url;
@@ -113,24 +116,25 @@ namespace Sugang.INHA_API
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     var res = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(51949)).ReadToEnd();
-                    var regex = new Regex(@"<td class=""Center"">.*?([A-Z]{3}[0-9]{4})\-([0-9]{3}).*?Center"">.*?</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>");
-                    var match = regex.Match(Regex.Replace(res, "&nbsp;", " "));
+                    var regex = new Regex(@"<td class=""Center"">.*?([A-Z]{3}[0-9]{4})\-([0-9]{3}).*?Center"">.*?</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?openPop\(""(.*?)""");
+                    var match = regex.Match(Regex.Replace(res, " & nbsp;", " "));
                     var mresult = new List<Subject>();
                     while (match.Success)
                     {
-                        var ss = new Subject();
-                        ss.Department = dd.Item2;
-                        ss.Hacksu = match.Groups[1].Value;
-                        ss.Group = match.Groups[2].Value;
-                        ss.Name = match.Groups[3].Value;
-                        ss.Class = match.Groups[4].Value;
-                        ss.Score = match.Groups[5].Value;
-                        ss.Type = match.Groups[6].Value;
-                        ss.Time = match.Groups[7].Value;
-                        ss.Professor = match.Groups[8].Value;
-                        ss.Estimation = match.Groups[9].Value;
-                        ss.Bigo = match.Groups[10].Value;
-                        mresult.Add(ss);
+                        var subject = new Subject();
+                        subject.Department = dd.Item2;
+                        subject.Hacksu = match.Groups[1].Value;
+                        subject.Group = match.Groups[2].Value;
+                        subject.Name = match.Groups[3].Value;
+                        subject.Class = match.Groups[4].Value;
+                        subject.Score = match.Groups[5].Value;
+                        subject.Type = match.Groups[6].Value;
+                        subject.Time = match.Groups[7].Value;
+                        subject.Professor = match.Groups[8].Value;
+                        subject.Estimation = match.Groups[9].Value;
+                        subject.Bigo = match.Groups[10].Value;
+                        subject.OpenPop = match.Groups[11].Value;
+                        mresult.Add(subject);
                         match = match.NextMatch();
                     }
 
@@ -144,6 +148,7 @@ namespace Sugang.INHA_API
 
         public static void SubscribeCourseByHacksu(this SugangSession ss, string hacksu)
         {
+
         }
 
         public static void UnsubscribeCourseByHacksu(this SugangSession ss, string hacksu)
