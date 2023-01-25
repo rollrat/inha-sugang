@@ -38,6 +38,13 @@ namespace Sugang.INHA_API
         public string OpenPop;
     }
 
+    public class SubjectSugang
+    {
+        public Subject Subject;
+        public int Application;
+        public int Assignment;
+    }
+
     public static class SugangUtils
     {
         public static List<Subject> QureyStatusByHaksu(this SugangSession ss, string haksu)
@@ -237,6 +244,44 @@ namespace Sugang.INHA_API
                     subject.Bigo = item.SelectSingleNode("./td[11]").InnerText.Trim();
                     result.Add(subject);
                 }
+
+                return result;
+            }
+        }
+
+        public static List<SubjectSugang> GetUseonSugangStatus(this SugangSession ss, string hacksu)
+        {
+            var request = ss.CreateGetRequest($"https://sugang.inha.ac.kr/sugang/SU_53005/Remain_Search.aspx?gb=direct&gubun=1&haksu={hacksu}&objList=txtHaksu");
+            
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                var html = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                var root_node = document.DocumentNode;
+
+                var table = root_node.SelectSingleNode("//table");
+                var result = new List<SubjectSugang>();
+                foreach (var item in table.SelectNodes("./tbody[1]/tr"))
+                {
+                    var subject = new Subject();
+                    subject.Hacksu = item.SelectSingleNode("./td[3]").InnerText.Trim();
+                    subject.Name = item.SelectSingleNode("./td[4]").InnerText.Trim();
+                    subject.Score = item.SelectSingleNode("./td[5]").InnerText.Trim();
+                    subject.Professor = item.SelectSingleNode("./td[6]").InnerText.Trim();
+                    subject.Department = item.SelectSingleNode("./td[6]").InnerText.Trim();
+
+                    var sugang = new SubjectSugang();
+                    var sugang_count = item.SelectSingleNode("./td[8]").InnerText.Trim();
+                    sugang.Application = Convert.ToInt32(sugang_count.Split('/')[0]);
+                    sugang.Assignment = Convert.ToInt32(sugang_count.Split('/')[1]);
+
+                    sugang.Subject = subject;
+
+                    result.Add(sugang);
+                }
+
 
                 return result;
             }

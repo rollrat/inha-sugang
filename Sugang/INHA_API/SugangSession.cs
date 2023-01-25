@@ -57,7 +57,7 @@ namespace Sugang.INHA_API
 
             string menu_aspx;
             using (var client = new WebClient())
-                menu_aspx = client.DownloadString("https://sugang.inha.ac.kr/sugang/Menu.aspx");
+                menu_aspx = client.DownloadString("https://sugang.inha.ac.kr/sugang/Menu.aspx?login=no");
 
             var document = new HtmlDocument();
             document.LoadHtml(menu_aspx);
@@ -77,7 +77,7 @@ namespace Sugang.INHA_API
             //  Request Session Cookie
             //
 
-            var request = (HttpWebRequest)WebRequest.Create("https://sugang.inha.ac.kr/sugang/Menu.aspx");
+            var request = (HttpWebRequest)WebRequest.Create("https://sugang.inha.ac.kr/sugang/Menu.aspx?login=no");
             pass_common(ref request);
 
             request.Method = "POST";
@@ -138,7 +138,7 @@ namespace Sugang.INHA_API
             //  Create ITISSugang Session
             //
 
-            var request = (HttpWebRequest)WebRequest.Create("https://sugang.inha.ac.kr/sugang/SU_53001/Sugang_Save.ASPX");
+            var request = (HttpWebRequest)WebRequest.Create("https://sugang.inha.ac.kr/sugang/SU_53005/Sugang_Save.aspx");
             pass_common(ref request);
 
             request.Method = "GET";
