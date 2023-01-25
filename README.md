@@ -70,13 +70,13 @@ Course registration API is not provided.
 
 ```cs
 var target_lists = @"BNF3104|CHM1021|CHM1023|GEB1143|...";
-var results = new List<Subject();
+var results = new List<Subject>();
 
 // do not parallel
 foreach (var target in target_lists.Split('|'))
 {
-    var uss = session.GetUseonSugangStatus(target);
-    results.AddRange(uss);
+    var statuss = session.QureyStatusByHaksu(target);
+    results.AddRange(statuss);
 }
 
 var builder = new StringBuilder();
