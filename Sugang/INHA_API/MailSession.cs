@@ -1,6 +1,6 @@
 ﻿/***
 
-   Copyright (C) 2020. rollrat. All Rights Reserved.
+   Copyright (C) 2020-2023. rollrat. All Rights Reserved.
    
    Author: Jeong HyunJun
 

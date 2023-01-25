@@ -1,6 +1,6 @@
 ﻿/***
 
-   Copyright (C) 2020. rollrat. All Rights Reserved.
+   Copyright (C) 2020-2023. rollrat. All Rights Reserved.
    
    Author: Jeong HyunJun
 
@@ -21,7 +21,7 @@ namespace Sugang
         static void Main(string[] args)
         {
             Console.WriteLine("Sugang Remain Alarm V1.0");
-            Console.WriteLine("Copyright (C) 2020. Jeong HyunJun. All Rights Reserved.");
+            Console.WriteLine("Copyright (C) 2020-2023. Jeong HyunJun. All Rights Reserved.");
             Console.WriteLine("Any problems arising from using this program are yours.");
             Console.WriteLine("Program developers are not liable for any problems arising from using this program.");
             Console.WriteLine("");
