@@ -41,6 +41,7 @@ namespace Sugang.INHA_API
     public class SubjectSugang
     {
         public Subject Subject;
+        public string CountRaw;
         public int Application;
         public int Assignment;
     }
@@ -270,18 +271,19 @@ namespace Sugang.INHA_API
                     subject.Name = item.SelectSingleNode("./td[4]").InnerText.Trim();
                     subject.Score = item.SelectSingleNode("./td[5]").InnerText.Trim();
                     subject.Professor = item.SelectSingleNode("./td[6]").InnerText.Trim();
-                    subject.Department = item.SelectSingleNode("./td[6]").InnerText.Trim();
+                    subject.Department = item.SelectSingleNode("./td[7]").InnerText.Trim();
 
                     var sugang = new SubjectSugang();
                     var sugang_count = item.SelectSingleNode("./td[8]").InnerText.Trim();
-                    sugang.Application = Convert.ToInt32(sugang_count.Split('/')[0]);
-                    sugang.Assignment = Convert.ToInt32(sugang_count.Split('/')[1]);
+                    sugang.CountRaw = sugang_count;
+
+                    //sugang.Application = Convert.ToInt32(sugang_count.Split('/')[0]);
+                    //sugang.Assignment = Convert.ToInt32(sugang_count.Split('/')[1]);
 
                     sugang.Subject = subject;
 
                     result.Add(sugang);
                 }
-
 
                 return result;
             }
