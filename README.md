@@ -62,6 +62,23 @@ session.SubscribeCourseBySubject(subjects.Where(x => x.Name.Contains("컴파일�
 
 ### 1.3. Course Application Method
 
+Course registration API is not provided.
+
+### 1.4. View Method
+
+#### 1.4.1. Get useon sugang status - Login required
+
+```cs
+var target_lists = @"BNF3104|CHM1021|CHM1023|GEB1143|...";
+var results = new List<SubjectSugang>();
+
+foreach (var target in target_lists.Split('|'))
+{
+    var uss = SugangUtils.GetUseonSugangStatus(session, target);
+    results.AddRange(uss);
+}
+```
+
 ## 2. Mail Method
 
 ### 2.1. Query Address by Member Name
