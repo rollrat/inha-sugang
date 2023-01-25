@@ -64,18 +64,26 @@ session.SubscribeCourseBySubject(subjects.Where(x => x.Name.Contains("컴파일�
 
 Course registration API is not provided.
 
-### 1.4. View Method
+### 1.4. Query Method
 
-#### 1.4.1. Get useon sugang status - Login required
+#### 1.4.1. Qurey status by haksu - Login required
 
 ```cs
 var target_lists = @"BNF3104|CHM1021|CHM1023|GEB1143|...";
-var results = new List<SubjectSugang>();
+var results = new List<Subject();
 
+// do not parallel
 foreach (var target in target_lists.Split('|'))
 {
-    var uss = SugangUtils.GetUseonSugangStatus(session, target);
+    var uss = session.GetUseonSugangStatus(target);
     results.AddRange(uss);
+}
+
+var builder = new StringBuilder();
+
+foreach (var result in results)
+{
+    builder.AppendLine($"{result.Hacksu}|{result.Department}|{result.Name}|{result.Score}|{result.Professor}|{result.Remain}");
 }
 ```
 
