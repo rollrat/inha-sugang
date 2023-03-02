@@ -46,7 +46,7 @@ namespace Sugang.INHA_API
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {
-                var html = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(51949)).ReadToEnd();
+                var html = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
                 var document = new HtmlDocument();
                 document.LoadHtml(html);
@@ -116,7 +116,7 @@ namespace Sugang.INHA_API
 
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    var res = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(51949)).ReadToEnd();
+                    var res = new StreamReader(response.GetResponseStream()).ReadToEnd();
                     var regex = new Regex(@"<td class=""Center"">.*?([A-Z]{3}[0-9]{4})\-([0-9]{3}).*?Center"">.*?</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?Center"">(.*?)</td>.*?openPop\(""(.*?)""");
                     var match = regex.Match(Regex.Replace(res, " & nbsp;", " "));
                     var mresult = new List<Subject>();

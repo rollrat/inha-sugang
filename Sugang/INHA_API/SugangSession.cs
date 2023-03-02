@@ -30,6 +30,31 @@ namespace Sugang.INHA_API
         #region Login
 
         /// <summary>
+        /// Create Session Instance from Cookies
+        /// </summary>
+        /// <param name="cookie_home"></param>
+        /// <param name="cookie_sugang"></param>
+        /// <returns></returns>
+        public static SugangSession CreateFromCookies(string cookie_home, string cookie_sugang)
+        {
+            var session = new SugangSession
+            {
+                Cookies = new CookieCollection(),
+                IsValidITISSugangCookie = true
+            };
+
+            foreach (var cookie in ($"{cookie_home}&{cookie_sugang}").Split('&'))
+            {
+                var equal_index = cookie.IndexOf('=');
+                var key = cookie.Substring(0, equal_index);
+                var value = cookie.Substring(equal_index + 1);
+                session.Cookies.Add(new Cookie(key, value));
+            }
+
+            return session;
+        }
+
+        /// <summary>
         /// Login to sugang.inha.ac.kr
         /// </summary>
         /// <param name="id"></param>
@@ -113,6 +138,11 @@ namespace Sugang.INHA_API
                     ss.IsValidITISSugangCookie = true;
                 }
                 catch { }
+
+                foreach (Cookie cookie in ss.Cookies)
+                {
+                    Console.WriteLine(cookie.ToString());
+                }
 
                 return ss;
             }
